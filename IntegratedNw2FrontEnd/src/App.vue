@@ -1,47 +1,73 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { defineProps } from "vue";
+
+const props = defineProps({
+  tasks: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div>
+    <div class="">
+      <h1 class="flex justify-center font-semibold p-10 text-2xl">
+        IT-Bangmod Kradan Kanban
+      </h1>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div class="tableContainer">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Assignees</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(task, index) in tasks" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.assignees.join(", ") }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto; /* Add horizontal scrolling for small screens */
+}
+.table-container {
+  max-width: 800px; /* Adjust the maximum width as per your requirement */
+  margin: 0 auto; /* Center the table horizontally */
+}
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #c4f3ff;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+/* Make table responsive */
+@media screen and (max-width: 600px) {
+  table {
+    overflow-x: auto; /* Enable horizontal scrolling */
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  td,
+  th {
+    white-space: nowrap; /* Prevent line breaks */
+    min-width: 120px; /* Minimum width for cells */
   }
 }
 </style>
