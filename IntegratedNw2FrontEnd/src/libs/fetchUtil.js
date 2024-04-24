@@ -1,4 +1,12 @@
-async function getTask(url) {
+const url = import.meta.env.VITE_API_URL;
+
+class TaskManagement {
+
+  constructor() {
+    this.task = []
+  }
+
+  async function getTask() {
     try {
       const res = await getTask(`${url}`);
       if (!res.ok) {
@@ -12,5 +20,7 @@ async function getTask(url) {
     }
   
   }
+}
+
 
 export { getTask }

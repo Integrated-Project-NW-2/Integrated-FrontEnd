@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { TaskManageMent } from '../libs/fetchUtil.js'
+
+const url = import.meta.env.VITE_API_URL
+const tasks = ref(TaskManageMent(url).getTasks())
+const detailModal = ref(false)
+</script>
 
 <template>
   <div class="w-full bg-gray-100">
