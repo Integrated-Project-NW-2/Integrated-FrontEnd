@@ -9,5 +9,4 @@ async function getTaskData(url) {
   }
 }
 
-
 export { getTaskData }
