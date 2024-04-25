@@ -1,11 +1,6 @@
-const url = import.meta.env.VITE_API_URL;
-
-async function getTaskData() {
+async function getTaskData(url) {
   try {
     const res = await fetch(`${url}/v1/tasks`);
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`)
-    }
     const data = await res.json();
     return data
   } catch (error) {
@@ -13,6 +8,5 @@ async function getTaskData() {
     return null;
   }
 }
-
 
 export { getTaskData }

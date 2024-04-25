@@ -7,7 +7,7 @@ const detailModal = ref(false)
 
 onMounted(async () => {
   try {
-    const taskData = await getTaskData()
+    const taskData = await getTaskData(import.meta.env.VITE_BASE_URL)
     if (taskData) {
       tasks.value = taskData
     } else {
