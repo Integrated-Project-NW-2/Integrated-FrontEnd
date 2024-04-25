@@ -9,7 +9,6 @@ onMounted(async () => {
   try {
     console.log(import.meta.env.VITE_BASE_URL)
     const taskData = await getTaskData(import.meta.env.VITE_BASE_URL)
-    console.log("sdfasf");
     if (taskData) {
       tasks.value = taskData
     } else {
