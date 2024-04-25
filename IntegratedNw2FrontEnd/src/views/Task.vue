@@ -1,23 +1,17 @@
 <script setup>
-import { getTaskData } from "../libs/fetchUtil.js"
-import { onMounted, ref } from "vue"
+import { getTaskData } from '../libs/fetchUtil.js'
+import { onMounted, ref } from 'vue'
+import { TaskManagement } from '/src/libs/TaskManagement.js';
+import  Modal  from '../components/Modal.vue'
 
-const tasks = ref([])
-const detailModal = ref(false)
-
+const showDetail = ref(false)
+const taskManagement = new TaskManagement()
 onMounted(async () => {
-  try {
-    console.log(import.meta.env.VITE_BASE_URL)
-    const taskData = await getTaskData(import.meta.env.VITE_BASE_URL)
-    if (taskData) {
-      tasks.value = taskData
-    } else {
-      console.error("Failed to fetch task data.")
-    }
-  } catch (error) {
-    console.error("Error fetching task data:", error)
-  }
+   taskManagement.setTasks(await getTaskData(import.meta.env.VITE_BASE_URL))
 })
+const setDetail = (set) => {
+  showDetail.value = set;
+};
 </script>
 
 <template>
@@ -25,43 +19,52 @@ onMounted(async () => {
     <div class="justify-center text-center w-full py-3 bg-white">
       <h1 class="font-bold text-2xl text-gray-800">IT-Bangmod Kradan Kanban</h1>
     </div>
-    <div
-      class="flex flex-row border-2 border-black rounded-md mx-3 mb-3 text-black"
-    >
-      <div class="mx-16 px-2 border-r-2 border-black">
-        <p></p>
-      </div>
-      <div class="w-2/4 px-2 border-r-2 border-black">
-        <p>Title</p>
-      </div>
-      <div class="w-1/4 px-2 border-r-2 border-black">
-        <p>Assignees</p>
-      </div>
-      <div class="w-1/4 px-2">
-        <p>Status</p>
-      </div>
-      <div class="flex flex-col mx-3 mb-3 text-black">
-        <ul class="space-y-2">
-          <li v-if="tasks.length === 0">No task</li>
-          <li v-for="task in tasks" :key="task.id">
-            <div class="flex flex-row">
-              <div class="mx-16 px-2 border-r-2 border-black">
-                <p>{{ task.id }}</p>
-              </div>
-              <div class="w-2/4 px-2 border-r-2 border-black">
-                <p>{{ task.title }}</p>
-              </div>
-              <div class="w-1/4 px-2 border-r-2 border-black">
-                <p>{{ task.assignees }}</p>
-              </div>
-              <div class="w-1/4 px-2">
-                <p>{{ task.status }}</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <div class="overflow-x-auto flex">
+      <div class="border justify-center ">
+      <table class="min-w-full divide-y divide-gray-200 border ">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[10%]"
+            ></th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[30%]"
+            >
+              Title
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[30%]"
+            >
+              Assignees
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[30%]"
+            >
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <div v-if="taskManagement.getTask().length === 0 " class="">No task</div>
+          <tr v-for="task in taskManagement.getTask()" :key="task.taskId" class="itbkk-item">
+            <td class="px-6 py-4 whitespace-nowrap">{{ task.taskId }}</td>
+            <td class="itbkk-title px-6 py-4 whitespace-nowrap cursor-pointer hover:text-violet-600 hover:duration-200" @click="showDetail = true">
+              {{ task.title }}
+            </td>
+            <td class="itbkk-assignees px-6 py-4 whitespace-nowrap">
+              {{ task.assignees }}
+            </td>
+            <td class="itbkk-status px-6 py-4 whitespace-nowrap">
+              {{ task.status }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    </div>
+    <teleport to="body" v-if="showDetail">
+    <Modal @setDetail="setDetail"></Modal>
+  </teleport>
   </div>
 </template>
 

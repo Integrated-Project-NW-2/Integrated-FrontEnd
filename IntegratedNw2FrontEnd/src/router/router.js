@@ -5,6 +5,10 @@ import NotFound from "../views/NotFound.vue";
 const history = createWebHistory();
 const routes = [
 	{
+        path: "/",
+        redirect: "/task" // Redirect root path to /task
+    },
+	{
 		path: "/task",
 		name: "Task",
 		component: Task
