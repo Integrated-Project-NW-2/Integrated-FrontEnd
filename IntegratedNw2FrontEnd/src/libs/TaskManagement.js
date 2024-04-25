@@ -1,6 +1,7 @@
 import { reactive } from "vue";
 
 class TaskManagement {
+
     constructor() {
       this.tasks = reactive([])
     }

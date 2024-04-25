@@ -21,7 +21,7 @@ const setDetail = (set) => {
     </div>
     <div class="overflow-x-auto">
   <table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-50">
+    <thead class="bg-gray-50 ">
       <tr>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
@@ -29,8 +29,15 @@ const setDetail = (set) => {
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
-          <div v-if="taskManagement.getTask().length === 0 " class="">No task</div>
+    <tbody v-if="taskManagement.getTask().length === 0 " class="w-full border bg-white">
+      <tr class="w-full">
+        <td></td>
+        <td></td>
+        <td><div class="m-[auto]">NO TASK</div></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody v-else class="bg-white divide-y divide-gray-200">
           <tr v-for="task in taskManagement.getTask()" :key="task.taskId" class="itbkk-item">
             <td class="px-6 py-4 whitespace-nowrap">{{ task.taskId }}</td>
             <td class="itbkk-title px-6 py-4 whitespace-nowrap cursor-pointer hover:text-violet-600 hover:duration-200" @click="showDetail = true">
