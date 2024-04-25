@@ -1,9 +1,22 @@
 <script setup>
-import { TaskManageMent } from '../libs/fetchUtil.js'
+import { getTaskData } from "../libs/fetchUtil.js"
+import { onMounted, ref } from "vue"
 
-const url = import.meta.env.VITE_API_URL
-const tasks = ref(TaskManageMent(url).getTasks())
+const tasks = ref([])
 const detailModal = ref(false)
+
+onMounted(async () => {
+  try {
+    const taskData = await getTaskData()
+    if (taskData) {
+      tasks.value = taskData
+    } else {
+      console.error("Failed to fetch task data.")
+    }
+  } catch (error) {
+    console.error("Error fetching task data:", error)
+  }
+})
 </script>
 
 <template>
@@ -26,21 +39,28 @@ const detailModal = ref(false)
       <div class="w-1/4 px-2">
         <p>Status</p>
       </div>
-      <!-- ID -->
-      <div class="flex-grow overflow-auto"></div>
-      <!-- list of task -->
-      <ul class="space-y-2">
-        <li v-if="tasks.length === 0">No task</li>
-        <!-- <li v-for="task in column.tasks" :key="task.title"> {{ task.title }} </li> -->
-        <!-- <li v-for="itbkk-title" in  :key="task.title">{task.title}</li>
-      <li v-for="itbkk-assignees" in  :key="task.assignees">{task.assignees}</li>
-      <li v-for="itbkk-status" in  :key="task.status">{task.status}</li> -->
-      </ul>
+      <div class="flex flex-col mx-3 mb-3 text-black">
+        <ul class="space-y-2">
+          <li v-if="tasks.length === 0">No task</li>
+          <li v-for="task in tasks" :key="task.id">
+            <div class="flex flex-row">
+              <div class="mx-16 px-2 border-r-2 border-black">
+                <p>{{ task.id }}</p>
+              </div>
+              <div class="w-2/4 px-2 border-r-2 border-black">
+                <p>{{ task.title }}</p>
+              </div>
+              <div class="w-1/4 px-2 border-r-2 border-black">
+                <p>{{ task.assignees }}</p>
+              </div>
+              <div class="w-1/4 px-2">
+                <p>{{ task.status }}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- <div class="flex items-center justify-center mt-4">
-      <input v-model="newTask.title" type="text" placeholder="New Task Title" class="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500">
-      <button @click="addTask" class="ml-2 py-2 px-3 bg-blue-500 text-white rounded-md hover:bg-blue-700">Add Task</button>
-    </div> -->
   </div>
 </template>
 
