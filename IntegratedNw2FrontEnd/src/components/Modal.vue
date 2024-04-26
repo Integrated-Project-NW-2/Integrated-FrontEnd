@@ -3,23 +3,23 @@ const emit = defineEmits(['setDetail'])
 const props = defineProps({
   tasks:Object
 })
-function splitTime(date) {
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const seconds = date.getSeconds().toString().padStart(2, '0');
+// function splitTime(date) {
+//   const hours = date.getHours().toString().padStart(2, '0');
+//   const minutes = date.getMinutes().toString().padStart(2, '0');
+//   const seconds = date.getSeconds().toString().padStart(2, '0');
 
-  return `${hours}:${minutes}:${seconds}`
-}
+//   return `${hours}:${minutes}:${seconds}`
+// }
 
-function formatDateCreated() {
-  const createdDate = new Date(props.tasks?.createdOn);
-  return `${createdDate.getFullYear()}-${(createdDate.getMonth() + 1).toString().padStart(2, '0')}-${createdDate.getDate().toString().padStart(2, '0')} ${splitTime(createdDate)}`;
-}
+// function formatDateCreated() {
+//   const createdDate = new Date(props.tasks?.createdOn);
+//   return `${createdDate.getFullYear()}-${(createdDate.getMonth() + 1).toString().padStart(2, '0')}-${createdDate.getDate().toString().padStart(2, '0')} ${splitTime(createdDate)}`;
+// }
 
-function formatDateUpdated() {
-  const updatedDate = new Date(props.tasks?.updatedOn);
-  return `${updatedDate.getFullYear()}-${(updatedDate.getMonth() + 1).toString().padStart(2, '0')}-${updatedDate.getDate().toString().padStart(2, '0')} ${splitTime(updatedDate)}`;
-}
+// function formatDateUpdated() {
+//   const updatedDate = new Date(props.tasks?.updatedOn);
+//   return `${updatedDate.getFullYear()}-${(updatedDate.getMonth() + 1).toString().padStart(2, '0')}-${updatedDate.getDate().toString().padStart(2, '0')} ${splitTime(updatedDate)}`;
+// }
 
 </script>
 
@@ -77,8 +77,8 @@ function formatDateUpdated() {
               </div>
               <div class="mt-10 ml-4">
               <div class="itbkk-timezone"><div>TimeZone</div><div>{{ Intl.DateTimeFormat().resolvedOptions().timeZone }}</div></div>
-              <div class="itbkk-created-on"><div>Created On</div><div>{{ formatDateCreated() }}</div></div>
-              <div class="itbkk-updated-on"><div>Updated On</div><div>{{ formatDateUpdated() }}</div></div>
+              <div class="itbkk-created-on"><div>Created On</div><div>{{ new Date(tasks?.createdOn).toLocaleString("en-GB") }}</div></div>
+              <div class="itbkk-updated-on"><div>Updated On</div><div>{{ new Date(tasks?.updatedOn).toLocaleString("en-GB") }}</div></div>
             </div>
             </div>
           </div>
