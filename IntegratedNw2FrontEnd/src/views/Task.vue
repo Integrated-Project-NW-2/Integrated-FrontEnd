@@ -16,6 +16,28 @@ const setDetail = (set) => {
 async function fetchById(id) {
   dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL, id)
 }
+const task = ref({
+  status: 'No status',
+  todo: 'To Do',
+  doing: 'Doing',
+  done: 'Done'
+});
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case 'No status':
+      return 'DimGray';
+    case 'To do':
+      return 'Red'
+    case 'Doing':
+      return 'DeepSkyBlue'
+    case 'Done':
+      return 'SpringGreen'
+    // Add more cases for other statuses if needed
+    default:
+      return 'transparent'; // Default background color
+  }
+}
 </script>
 
 <template>
@@ -79,7 +101,7 @@ async function fetchById(id) {
               <td class="itbkk-assignees px-6 py-4 whitespace-nowrap border-s-2">
                 {{ task.assignees }}
               </td>
-              <td class="itbkk-status px-6 py-4 whitespace-nowrap border-s-2">
+              <td class="itbkk-status px-6 py-4 whitespace-nowrap border-s-2 text-white" :style="{ backgroundColor: getStatusColor(task.status)}">
                 {{ task.status }}
               </td>
             </tr>
