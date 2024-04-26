@@ -33,7 +33,6 @@ const getStatusColor = (status) => {
       return 'DeepSkyBlue'
     case 'Done':
       return 'SpringGreen'
-    // Add more cases for other statuses if needed
     default:
       return 'transparent'; // Default background color
   }
