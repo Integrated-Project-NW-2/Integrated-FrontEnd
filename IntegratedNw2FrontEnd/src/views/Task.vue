@@ -51,7 +51,7 @@ async function fetchById(id){
             <td class="itbkk-assignees px-6 py-4 whitespace-nowrap">
               {{ task.assignees }}
             </td>
-            <td class="itbkk-status px-6 py-4 whitespace-nowrap">
+            <td class="itbkk-status px-6 py-4 whitespace-nowrap ">
               {{ task.status }}
             </td>
           </tr>
