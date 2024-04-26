@@ -1,17 +1,22 @@
 <script setup>
-import { getTaskData } from '../libs/fetchUtil.js'
+import { getTaskById, getTaskData } from '../libs/fetchUtil.js'
 import { onMounted, ref } from 'vue'
 import { TaskManagement } from '/src/libs/TaskManagement.js';
 import  Modal  from '../components/Modal.vue'
 
 const showDetail = ref(false)
 const taskManagement = new TaskManagement()
+const dataById = ref()
 onMounted(async () => {
    taskManagement.setTasks(await getTaskData(import.meta.env.VITE_BASE_URL))
 })
 const setDetail = (set) => {
   showDetail.value = set;
 };
+async function fetchById(id){
+  dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL,id)
+}
+
 </script>
 
 <template>
@@ -38,9 +43,9 @@ const setDetail = (set) => {
       </tr>
     </tbody>
     <tbody v-else class="bg-white divide-y divide-gray-200">
-          <tr v-for="task in taskManagement.getTask()" :key="task.taskId" class="itbkk-item">
+          <tr v-for="task in taskManagement.getTask()" :key="task.taskId" class="itbkk-item cursor-pointer hover:text-violet-600 hover:duration-200" @click="[showDetail = true,fetchById(task.taskId)]" >
             <td class="px-6 py-4 whitespace-nowrap">{{ task.taskId }}</td>
-            <td class="itbkk-title px-6 py-4 whitespace-nowrap cursor-pointer hover:text-violet-600 hover:duration-200" @click="showDetail = true">
+            <td class="itbkk-title px-6 py-4 whitespace-nowrap">
               {{ task.title }}
             </td>
             <td class="itbkk-assignees px-6 py-4 whitespace-nowrap">
@@ -55,7 +60,7 @@ const setDetail = (set) => {
 </div>
 
     <teleport to="body" v-if="showDetail">
-    <Modal @setDetail="setDetail"></Modal>
+    <Modal @setDetail="setDetail" :tasks="dataById"></Modal>
   </teleport>
   </div>
 </template>

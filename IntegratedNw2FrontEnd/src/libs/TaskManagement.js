@@ -22,5 +22,8 @@ class TaskManagement {
       const convertStatus = capitalizedStatus.replace(/_/g, " ");
       return convertStatus;
     }
+    getTaskById(){
+      return this.tasks
+    }
   }
   export { TaskManagement }

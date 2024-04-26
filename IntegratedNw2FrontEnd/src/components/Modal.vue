@@ -1,5 +1,15 @@
 <script setup>
 const emit = defineEmits(['setDetail'])
+const props = defineProps({
+  tasks:Object
+})
+
+function formatDateCreated(){
+  return `${new Date(props.tasks?.createdOn).getFullYear()}-${new Date(props.tasks?.createdOn).getMonth()}-${new Date(props.tasks?.createdOn).getDate()}`
+}
+function formatDateUpdated(){
+  return `${new Date(props.tasks?.updatedOn).getFullYear()}-${new Date(props.tasks?.updatedOn).getMonth()}-${new Date(props.tasks?.updatedOn).getDate()}`
+}
 </script>
 
 <template>
@@ -9,7 +19,7 @@ const emit = defineEmits(['setDetail'])
     >
       <div class="w-[90%] m-[auto]">
         <div
-          class="flex flex-col justify-between bg-white p-4 border-gray-200 rounded-md"
+          class="flex flex-col justify-between bg-slate-600 p-4 border-gray-200 rounded-md"
         >
           <div class="w-full h-[10%] mt-2">
             <h1 class="text-xl font-bold">Design Backend API for PBI 1,2</h1>
@@ -22,7 +32,7 @@ const emit = defineEmits(['setDetail'])
                 <textarea
                   class="w-[95%] h-[90%] px-4 py-2 mx-4 my-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                   placeholder="Enter your text here..."
-                ></textarea>
+                >{{ tasks?.description }}</textarea>
               </div>
             </div>
             <div class=" w-[30%] h-[50%] flex-col">
@@ -32,7 +42,7 @@ const emit = defineEmits(['setDetail'])
                   <textarea
                     class="w-[95%] h-[90%] px-4 py-2 mx-4 my-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                     placeholder="Enter your text here..."
-                  ></textarea>
+                  >{{ tasks?.assignees }}</textarea>
                 </div>
               </div>
               <div class=" w-full h-[100px]">
@@ -45,26 +55,28 @@ const emit = defineEmits(['setDetail'])
                   <select
                     class="select select-bordered w-full  bg-inherit"
                   >
+                  
                     <option disabled selected>Status</option>
-                    <option>To do</option>
-                    <option>Doing</option>
-                    <option>Done</option>
+                    <option :selected="tasks?.status === 'TO_DO'">To do</option>
+                    <option :selected="tasks?.status === 'DOING'">Doing</option>
+                    <option :selected="tasks?.status === 'DONE'">Done</option>
+                    <option :selected="tasks?.status === 'NO_STATUS'">No status</option>
                   </select>
                 </label>
               </div>
               <div class="mt-10 ml-4">
-              <div class=""><div>TimeZone</div><div></div></div>
-              <div class=""><div>Created On</div><div></div></div>
-              <div class=""><div>Updated On</div><div></div></div>
+              <div class=""><div>TimeZone</div><div>{{ Intl.DateTimeFormat().resolvedOptions().timeZone }}</div></div>
+              <div class=""><div>Created On</div><div>{{ formatDateCreated() }}</div></div>
+              <div class=""><div>Updated On</div><div>{{ formatDateUpdated() }}</div></div>
             </div>
             </div>
           </div>
           <div class="flex flex-row w-full justify-end ">
           <div class=" mr-2">
-            <div @click="$emit('setDetail', false)" class="btn">Ok</div>
+            <div @click="$emit('setDetail', false)" class="btn btn-info">Ok</div>
           </div>
           <div class="">
-            <div @click="$emit('setDetail', false)" class="btn">close</div>
+            <div @click="$emit('setDetail', false)" class="btn btn-error">close</div>
           </div>
         </div>
         </div>
