@@ -14,7 +14,7 @@ const setDetail = (set) => {
   showDetail.value = set
 }
 async function fetchById(id) {
-  dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL, id)
+  dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL,id)
 }
 const task = ref({
   status: 'No Status',
@@ -32,7 +32,7 @@ const getStatusColor = (status) => {
     case 'Doing':
       return 'DeepSkyBlue'
     case 'Done':
-      return 'SpringGreen'
+      return 'LimeGreen'
     default:
       return 'transparent'; // Default background color
   }
@@ -53,36 +53,36 @@ const convertStatus = (status) =>{
 </script>
 
 <template>
-  <div class="w-[90%] m-[auto] ">
-    <div class="w-full bg-gray-100">
-      <div class="justify-center text-center w-full py-3 bg-white">
-        <h1 class="font-bold text-2xl text-gray-800 my-10">
+  <div class="w-[90%] m-[auto]">
+    <div class="w-full">
+      <div class="justify-center text-center w-full py-3 ">
+        <h1 class="font-bold text-3xl text-white my-10">
           IT-Bangmod Kradan Kanban
         </h1>
       </div>
-      <div class="overflow-x-auto border-2 rounded-md">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+      <div class="overflow-x-auto rounded-md shadow-2xl">
+        <table class="min-w-full divide-y divide-gray-200 ">
+          <thead class="bg-gray-800">
             <tr>
               <th
                 scope="col"
-                class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider "
+                class="px-6 py-3 text-left text-md font-bold text-white uppercase tracking-wider "
               ></th>
               <th
                 scope="col"
-                class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-s-2"
+                class="px-6 py-3 text-left text-md font-bold text-white uppercase tracking-wider"
               >
                 Title
               </th>
               <th
                 scope="col"
-                class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-s-2"
+                class="px-6 py-3 text-left text-md font-bold text-white uppercase tracking-wider"
               >
                 Assignees
               </th>
               <th
                 scope="col"
-                class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-s-2"
+                class="px-6 py-3 text-left text-md font-bold text-white uppercase tracking-wider"
               >
                 Status
               </th>
@@ -107,13 +107,13 @@ const convertStatus = (status) =>{
               @click=";[(showDetail = true), fetchById(task.taskId)]"
             >
               <td class="px-6 py-4 whitespace-nowrap">{{ task.taskId }}</td>
-              <td class="itbkk-title px-6 py-4 whitespace-nowrap border-s-2">
+              <td class="itbkk-title px-6 py-4 whitespace-nowrap">
                 {{ task.title }}
               </td>
-              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap border-s-2" :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
+              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap " :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
                 {{ task.assignees ? task.assignees : 'Unassigned' }}
               </td>
-              <td class="itbkk-status px-6 py-4 whitespace-nowrap border-s-2 text-white" :style="{ backgroundColor: getStatusColor(task.status)}" >
+              <td class="itbkk-status px-6 py-4 whitespace-nowrap  text-white" :style="{ backgroundColor: getStatusColor(task.status)}" >
                 {{ convertStatus(task.status) }}
               </td>
             </tr>

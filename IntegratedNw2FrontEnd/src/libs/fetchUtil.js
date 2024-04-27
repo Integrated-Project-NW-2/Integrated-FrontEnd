@@ -20,4 +20,4 @@ async function getTaskById(url,id) {
 }
 
 
-export { getTaskData , getTaskById}
+export { getTaskData , getTaskById }
