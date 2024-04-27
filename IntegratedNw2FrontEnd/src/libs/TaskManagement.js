@@ -8,22 +8,21 @@ class TaskManagement {
     return this.tasks;
   }
   setTasks(tasks = []) {
-  return new Promise((resolve) => {
-    this.tasks.length = 0;
+    return new Promise((resolve) => {
+      this.tasks.length = 0;
 
-    if (tasks.length === 0) {
+      if (tasks.length === 0) {
         resolve();
         return;
-    }
+      }
 
-    tasks.forEach((task) => {
+      tasks.forEach((task) => {
         task.status = this.convertStatus(task.status);
         this.tasks.push(task);
+      });
+
+      resolve();
     });
-
-    resolve();
-});
-
   }
 
   convertStatus(status) {

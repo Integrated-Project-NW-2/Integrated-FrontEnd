@@ -17,7 +17,7 @@ async function fetchById(id) {
   dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL, id)
 }
 const task = ref({
-  status: 'No status',
+  status: 'No Status',
   todo: 'To Do',
   doing: 'Doing',
   done: 'Done'
@@ -37,6 +37,19 @@ const getStatusColor = (status) => {
       return 'transparent'; // Default background color
   }
 }
+const convertStatus = (status) =>{
+  switch (status) {
+    case 'No status':
+      return 'No Status';
+    case 'To do':
+      return 'To Do'
+    case 'Doing':
+      return 'Doing'
+    case 'Done':
+      return 'Done'
+  }
+}
+
 </script>
 
 <template>
@@ -97,11 +110,11 @@ const getStatusColor = (status) => {
               <td class="itbkk-title px-6 py-4 whitespace-nowrap border-s-2">
                 {{ task.title }}
               </td>
-              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap border-s-2">
-                {{ task.assignees }}
+              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap border-s-2" :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
+                {{ task.assignees ? task.assignees : 'Unassigned' }}
               </td>
-              <td class="itbkk-status px-6 py-4 whitespace-nowrap border-s-2 text-white" :style="{ backgroundColor: getStatusColor(task.status)}">
-                {{ task.status }}
+              <td class="itbkk-status px-6 py-4 whitespace-nowrap border-s-2 text-white" :style="{ backgroundColor: getStatusColor(task.status)}" >
+                {{ convertStatus(task.status) }}
               </td>
             </tr>
           </tbody>
