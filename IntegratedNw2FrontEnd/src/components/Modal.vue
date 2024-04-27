@@ -42,8 +42,8 @@ const props = defineProps({
               <div class="w-full h-[420px]">
                 <textarea
                   class="itbkk-description w-[95%] h-[90%] px-4 py-2 mx-4 my-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                  placeholder="Enter your text here..."
-                >{{ tasks?.description }}</textarea>
+                  placeholder="Enter your text here..." :style="{ fontStyle: tasks && tasks.description ? 'normal' : 'italic' }"
+                >{{ tasks?.description ?? 'No Description Provided'}}</textarea>
               </div>
             </div>
             <div class=" w-[30%] h-[50%] flex-col">
@@ -52,8 +52,8 @@ const props = defineProps({
                 <div class="h-[150px]">
                   <textarea
                     class="itbkk-assignees w-[95%] h-[90%] px-4 py-2 mx-4 my-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                    placeholder="Enter your text here..."
-                  >{{ tasks?.assignees }}</textarea>
+                    placeholder="Enter your text here..." :style="{fontStyle: tasks && tasks.assignees ? 'normal' : 'italic'}"
+                  >{{ tasks?.assignees ?? 'Unassigned'}}</textarea>
                 </div>
               </div>
               <div class=" w-full h-[100px]">
