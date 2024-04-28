@@ -9,6 +9,7 @@ import router from '../router/router.js'
 const showDetail = ref(false)
 const taskManagement = new TaskManagement()
 const dataById = ref()
+const route = useRoute()
 onMounted(async () => {
   taskManagement.setTasks(await getTaskData(import.meta.env.VITE_BASE_URL))
 })
@@ -19,6 +20,14 @@ const setDetail = (set) => {
 async function fetchById(id) {
   dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL,id)
   router.push({ name: 'taskDetial', params: { id: id } })
+  if (dataById.value.status == '404') {
+    alert("The requested task dose not exist");
+    router.replace({ name: 'task'})
+    return 
+  }
+}
+if(route.params.id){
+  fetchById(route.params.id)
 }
 const task = ref({
   status: 'No Status',
@@ -59,14 +68,14 @@ const convertStatus = (status) =>{
 <template>
   <div class="w-[90%] m-[auto]">
     <div class="w-full">
-      <div class="justify-center text-center w-full py-3 ">
+      <div class="justify-center text-center w-full py-3 "> 
         <h1 class="font-bold text-3xl text-white my-10">
           IT-Bangmod Kradan Kanban
         </h1>
       </div>
       <div class="overflow-x-auto rounded-md shadow-2xl">
         <table class="min-w-full divide-y divide-gray-200 ">
-          <thead class="bg-gray-800">
+          <thead class="#4793AF  bg-slate-600">
             <tr>
               <th
                 scope="col"
@@ -107,14 +116,14 @@ const convertStatus = (status) =>{
             <tr
               v-for="task in taskManagement.getTask()"
               :key="task.taskId"
-              class="itbkk-item cursor-pointer hover:text-violet-600 hover:duration-200"
+              class="itbkk-item cursor-pointer hover:text-violet-600 hover:duration-200 odd:bg-white even:bg-slate-50 hover:animate-pulse"
               @click="[(showDetail = true), fetchById(task.taskId)]"
             >
               <td class="px-6 py-4 whitespace-nowrap">{{ task.taskId }}</td>
               <td class="itbkk-title px-6 py-4 whitespace-nowrap">
                 {{ task.title }}
               </td>
-              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap " :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
+              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap " :class="{ 'text-red-200': !task.assignees }" :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
                 {{ task.assignees ? task.assignees : 'Unassigned' }}
               </td>
               <td class="itbkk-status px-6 py-4 whitespace-nowrap  text-white" :style="{ backgroundColor: getStatusColor(task.status)}" >
