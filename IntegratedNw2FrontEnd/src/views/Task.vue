@@ -15,6 +15,18 @@ const setDetail = (set) => {
 }
 async function fetchById(id) {
   dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL,id)
+<<<<<<< Updated upstream
+=======
+  router.push({ name: 'taskDetial', params: { id: id } })
+  if (dataById.value.status == '404') {
+    alert("The requested task does not exist");
+    router.replace({ name: 'task'})
+    return 
+  }
+}
+if(route.params.id){
+  fetchById(route.params.id)
+>>>>>>> Stashed changes
 }
 const task = ref({
   status: 'No Status',
@@ -26,15 +38,15 @@ const task = ref({
 const getStatusColor = (status) => {
   switch (status) {
     case 'No status':
-      return 'DimGray';
+      return 'SlateGray';
     case 'To do':
-      return 'Red'
+      return 'Tomato'
     case 'Doing':
-      return 'DeepSkyBlue'
+      return 'Orange'
     case 'Done':
       return 'LimeGreen'
     default:
-      return 'transparent'; // Default background color
+      return 'transparent';
   }
 }
 const convertStatus = (status) =>{
@@ -60,9 +72,11 @@ const convertStatus = (status) =>{
           IT-Bangmod Kradan Kanban
         </h1>
       </div>
-      <div class="overflow-x-auto rounded-md shadow-2xl">
-        <table class="min-w-full divide-y divide-gray-200 ">
-          <thead class="bg-gray-800">
+
+      <div class="overflow-x-auto shadow-2xl rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="#4793AF  bg-slate-600">
+
             <tr>
               <th
                 scope="col"
@@ -110,11 +124,12 @@ const convertStatus = (status) =>{
               <td class="itbkk-title px-6 py-4 whitespace-nowrap">
                 {{ task.title }}
               </td>
-              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap " :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
+
+              <td class="itbkk-assignees px-6 py-4 whitespace-nowrap " :class="{ 'text-red-300': !task.assignees }" :style="{fontStyle:task.assignees? 'normal' : 'italic'}">
                 {{ task.assignees ? task.assignees : 'Unassigned' }}
               </td>
-              <td class="itbkk-status px-6 py-4 whitespace-nowrap  text-white" :style="{ backgroundColor: getStatusColor(task.status)}" >
-                {{ convertStatus(task.status) }}
+              <td class="itbkk-status px-6 py-4 whitespace-nowrap  text-white flex justify-center"  >
+                <div class="btn shadow" :style="{ backgroundColor: getStatusColor(task.status)}">{{ convertStatus(task.status) }}</div>
               </td>
             </tr>
           </tbody>

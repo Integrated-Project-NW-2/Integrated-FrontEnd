@@ -3,34 +3,17 @@ const emit = defineEmits(['setDetail'])
 const props = defineProps({
   tasks:Object
 })
-// function splitTime(date) {
-//   const hours = date.getHours().toString().padStart(2, '0');
-//   const minutes = date.getMinutes().toString().padStart(2, '0');
-//   const seconds = date.getSeconds().toString().padStart(2, '0');
-
-//   return `${hours}:${minutes}:${seconds}`
-// }
-
-// function formatDateCreated() {
-//   const createdDate = new Date(props.tasks?.createdOn);
-//   return `${createdDate.getFullYear()}-${(createdDate.getMonth() + 1).toString().padStart(2, '0')}-${createdDate.getDate().toString().padStart(2, '0')} ${splitTime(createdDate)}`;
-// }
-
-// function formatDateUpdated() {
-//   const updatedDate = new Date(props.tasks?.updatedOn);
-//   return `${updatedDate.getFullYear()}-${(updatedDate.getMonth() + 1).toString().padStart(2, '0')}-${updatedDate.getDate().toString().padStart(2, '0')} ${splitTime(updatedDate)}`;
-// }
 
 </script>
 
 <template>
   <div>
     <div
-      class="bg-grey-500 backdrop-blur-sm w-screen h-screen fixed top-0 left-0 pt-[100px]"
+      class="bg-grey-500 backdrop-blur-sm w-screen h-screen fixed top-0 left-0 pt-[100px] "
     >
       <div class="w-[90%] m-[auto]">
         <div
-          class="flex flex-col justify-between bg-slate-600 p-4 border-gray-200 rounded-md"
+          class="flex flex-col justify-between bg-slate-600 p-4 border-gray-200 rounded-lg"
         >
           <div class="w-full h-[10%] mt-2">
             <h1 class="itbkk-title text-xl font-semibold text-white">Design Backend API for PBI 1,2</h1>
