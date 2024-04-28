@@ -3,6 +3,7 @@ const emit = defineEmits(['setDetail'])
 const props = defineProps({
   tasks:Object
 })
+
 // function splitTime(date) {
 //   const hours = date.getHours().toString().padStart(2, '0');
 //   const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -33,7 +34,7 @@ const props = defineProps({
           class="flex flex-col justify-between bg-slate-600 p-4 border-gray-200 rounded-md"
         >
           <div class="w-full h-[10%] mt-2">
-            <h1 class="itbkk-title text-xl font-semibold text-white">Design Backend API for PBI 1,2</h1>
+            <h1 class="itbkk-title text-xl font-semibold text-white">{{ tasks?.title }}</h1>
           </div>
           <div class="border-b w-full mt-4"></div>
           <div class="flex flex-row">
@@ -84,10 +85,10 @@ const props = defineProps({
           </div>
           <div class="flex flex-row w-full justify-end">
           <div class="mr-2">
-            <div @click="$emit('setDetail', false)" class="itbkk-button btn bg-emerald-500 hover:bg-emerald-600 text-white">ok</div>
+            <div @click="[$emit('setDetail', false),$router.replace({ name: 'task'})]" class="itbkk-button btn bg-emerald-500 hover:bg-emerald-600 text-white">ok</div>
           </div>
           <div >
-            <div @click="$emit('setDetail', false)" class="itbkk-button btn bg-red-500 hover:bg-red-600 text-white">close</div>
+            <div @click="[$emit('setDetail', false), $router.replace({ name: 'task'})]" class="itbkk-button btn bg-red-500 hover:bg-red-600 text-white">close</div>
           </div>
         </div>
         </div>

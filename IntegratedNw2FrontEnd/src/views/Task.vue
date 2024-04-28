@@ -3,6 +3,8 @@ import { getTaskById, getTaskData } from '../libs/fetchUtil.js'
 import { onMounted, ref } from 'vue'
 import { TaskManagement } from '/src/libs/TaskManagement.js'
 import Modal from '../components/Modal.vue'
+import { useRoute, useRouter } from 'vue-router'
+import router from '../router/router.js'
 
 const showDetail = ref(false)
 const taskManagement = new TaskManagement()
@@ -12,9 +14,11 @@ onMounted(async () => {
 })
 const setDetail = (set) => {
   showDetail.value = set
+  
 }
 async function fetchById(id) {
   dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL,id)
+  router.push({ name: 'taskDetial', params: { id: id } })
 }
 const task = ref({
   status: 'No Status',
@@ -104,7 +108,7 @@ const convertStatus = (status) =>{
               v-for="task in taskManagement.getTask()"
               :key="task.taskId"
               class="itbkk-item cursor-pointer hover:text-violet-600 hover:duration-200"
-              @click=";[(showDetail = true), fetchById(task.taskId)]"
+              @click="[(showDetail = true), fetchById(task.taskId)]"
             >
               <td class="px-6 py-4 whitespace-nowrap">{{ task.taskId }}</td>
               <td class="itbkk-title px-6 py-4 whitespace-nowrap">

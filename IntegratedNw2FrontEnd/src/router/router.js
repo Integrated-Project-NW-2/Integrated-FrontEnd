@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Task from "../views/Task.vue";
 import NotFound from "../views/NotFound.vue";
+import Modal from "@/components/Modal.vue";
 
 const history = createWebHistory();
 const routes = [
@@ -10,8 +11,13 @@ const routes = [
     },
 	{
 		path: "/task",
-		name: "Task",
-		component: Task
+		name: "task",
+		component: Task,
+		children:[{
+			path:':id',
+			name : 'taskDetial',
+			component : Modal
+		}]
 	},
     {
 		path: "/:notfoundpath(.*)",
