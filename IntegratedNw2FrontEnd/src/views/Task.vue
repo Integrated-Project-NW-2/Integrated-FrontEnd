@@ -15,8 +15,6 @@ const setDetail = (set) => {
 }
 async function fetchById(id) {
   dataById.value = await getTaskById(import.meta.env.VITE_BASE_URL,id)
-<<<<<<< Updated upstream
-=======
   router.push({ name: 'taskDetial', params: { id: id } })
   if (dataById.value.status == '404') {
     alert("The requested task does not exist");
@@ -26,7 +24,6 @@ async function fetchById(id) {
 }
 if(route.params.id){
   fetchById(route.params.id)
->>>>>>> Stashed changes
 }
 const task = ref({
   status: 'No Status',
